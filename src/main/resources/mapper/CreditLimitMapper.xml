@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.mapper.CreditLimitMapper">
+ 
+ <resultMap id="CreditLimitMap" type="com.yjy.entity.CreditLimit">
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="AVAILABLE_CREDIT" jdbcType="DECIMAL" property="availableCredit" />
+    <result column="LIMIT_CREDIT" jdbcType="DECIMAL" property="limitCredit" />
+    <result column="TEMPORARY_CREDIT" jdbcType="DECIMAL" property="temporaryCredit" />
+    <result column="CREDIT_REMARK" jdbcType="VARCHAR" property="creditRemark" />
+  </resultMap>
+ 
+ <select id="findLimitById" resultMap="CreditLimitMap">
+ 	select * from t_credit_limit t where t.id=  #{id,jdbcType=VARCHAR}
+ </select>
+ 
+ <update id="saveAvailable">
+ 	update t_credit_limit  set AVAILABLE_CREDIT=#{count} where id=#{id}
+ </update>
+ 
+ 
+ 
+ 
+  <resultMap id="BaseResultMap" type="com.yjy.entity.CreditLimit">
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="AVAILABLE_CREDIT" jdbcType="DECIMAL" property="availableCredit" />
+    <result column="LIMIT_CREDIT" jdbcType="DECIMAL" property="limitCredit" />
+    <result column="TEMPORARY_CREDIT" jdbcType="DECIMAL" property="temporaryCredit" />
+    <result column="CREDIT_REMARK" jdbcType="VARCHAR" property="creditRemark" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.yjy.entity.CreditLimit">
+    insert into t_credit_limit (ID, AVAILABLE_CREDIT, LIMIT_CREDIT, 
+      TEMPORARY_CREDIT, CREDIT_REMARK)
+    values (#{id,jdbcType=VARCHAR}, #{availableCredit,jdbcType=DECIMAL}, #{limitCredit,jdbcType=DECIMAL}, 
+      #{temporaryCredit,jdbcType=DECIMAL}, #{creditRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yjy.entity.CreditLimit">
+    insert into t_credit_limit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="availableCredit != null">
+        AVAILABLE_CREDIT,
+      </if>
+      <if test="limitCredit != null">
+        LIMIT_CREDIT,
+      </if>
+      <if test="temporaryCredit != null">
+        TEMPORARY_CREDIT,
+      </if>
+      <if test="creditRemark != null">
+        CREDIT_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="availableCredit != null">
+        #{availableCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="limitCredit != null">
+        #{limitCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="temporaryCredit != null">
+        #{temporaryCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="creditRemark != null">
+        #{creditRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

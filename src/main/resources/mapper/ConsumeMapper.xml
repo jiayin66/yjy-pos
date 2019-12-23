@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.mapper.ConsumeMapper">
+	<insert id="insertSelective" parameterType="com.yjy.entity.Consume">
+    insert into t_consume
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardId != null">
+        CARD_ID,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="money != null">
+        MONEY,
+      </if>
+      <if test="cost != null">
+        COST,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="score != null">
+        SCORE,
+      </if>
+      <if test="realMoney != null">
+        REAL_MONEY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null">
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="cost != null">
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="realMoney!= null">
+        #{realMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+ <resultMap id="ConsumeResultMap" type="com.yjy.entity.Consume">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_ID" jdbcType="VARCHAR" property="cardId" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="MONEY" jdbcType="DECIMAL" property="money" />
+    <result column="COST" jdbcType="DECIMAL" property="cost" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="CREATE_TIME" jdbcType="DATE" property="createTime" />
+    <result column="SCORE" jdbcType="INTEGER" property="score" />
+    <association property="creditcard" javaType="com.yjy.entity.Creditcard">
+    	 <id column="crid" jdbcType="VARCHAR" property="id"/>
+	    <result column="BILL_DATE" jdbcType="INTEGER" property="billDate" />
+	    <result column="SPACE_DATE" jdbcType="INTEGER" property="spaceDate" />
+	    <result column="CARD_ID" jdbcType="VARCHAR" property="cardId" />
+	    <result column="CARD_NAME" jdbcType="VARCHAR" property="cardName" />
+	    <result column="CREDIT_LIMIT_ID" jdbcType="VARCHAR" property="creditLimitId" />
+    </association>
+  </resultMap>
+<select id="consumefind" resultMap="ConsumeResultMap">
+		select co.*,cr.*,cr.id crid from t_consume co LEFT JOIN t_creditcard cr on co.CARD_ID=cr.ID 
+		<where>
+			<if test="type!=null">
+				and co.type=#{type,jdbcType=INTEGER}
+			</if>
+			<if test="cardId!=null">
+				and co.CARD_ID=#{cardId,jdbcType=VARCHAR}
+			</if>
+			<if test="score!=null">
+				and co.SCORE=#{score,jdbcType=VARCHAR}
+			</if>
+			<if test="startTime!=null">
+				and co.CREATE_TIME &gt;> #{startTime,jdbcType=DATE}
+			</if>
+			<if test="endTime!=null">
+				and co.CREATE_TIME &gt;> #{endTime,jdbcType=DATE}
+			</if>
+		</where>
+		order by co.CREATE_TIME desc,co.id
+
+</select>
+
+
+
+
+ <resultMap id="BaseResultMap" type="com.yjy.entity.Consume">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_ID" jdbcType="VARCHAR" property="cardId" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="MONEY" jdbcType="DECIMAL" property="money" />
+    <result column="COST" jdbcType="DECIMAL" property="cost" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="CREATE_TIME" jdbcType="DATE" property="createTime" />
+    <result column="SCORE" jdbcType="INTEGER" property="score" />
+ </resultMap>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  <sql id="Base_Column_List">
+    ID, CARD_ID, `TYPE`, MONEY, COST, REMARK, CREATE_TIME, SCORE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_consume
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_consume
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yjy.entity.Consume">
+    insert into t_consume (ID, CARD_ID, `TYPE`, 
+      MONEY, COST, REMARK, 
+      CREATE_TIME, SCORE)
+    values (#{id,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{money,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{score,jdbcType=INTEGER})
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.yjy.entity.Consume">
+    update t_consume
+    <set>
+      <if test="cardId != null">
+        CARD_ID = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `TYPE` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        MONEY = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="cost != null">
+        COST = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="score != null">
+        SCORE = #{score,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yjy.entity.Consume">
+    update t_consume
+    set CARD_ID = #{cardId,jdbcType=VARCHAR},
+      `TYPE` = #{type,jdbcType=INTEGER},
+      MONEY = #{money,jdbcType=DECIMAL},
+      COST = #{cost,jdbcType=DECIMAL},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      SCORE = #{score,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

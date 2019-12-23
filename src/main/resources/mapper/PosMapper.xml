@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjy.mapper.PosMapper">
+	 <resultMap id="TPosMap" type="com.yjy.entity.PosEntity">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="MACHINE_ID" jdbcType="VARCHAR" property="machineId" />
+    <result column="USE_TIME" jdbcType="TIMESTAMP" property="useTime" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <association property="userEntityList" javaType="com.yjy.entity.UserEntity">
+    	<id column="UID" jdbcType="VARCHAR" property="id" />
+	    <result column="NAME" jdbcType="VARCHAR" property="name" />
+	    <result column="DISCRIPTION" jdbcType="VARCHAR" property="discription" />
+	    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+	    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+	    <result column="UREMARK" jdbcType="VARCHAR" property="remark" />
+	    <result column="SORT" jdbcType="INTEGER" property="sort" />
+	    <result column="ADD_TIME" jdbcType="DATE" property="addTime" />
+    </association>
+  </resultMap>
+
+
+	<select id="findByUserIdHasUser" resultMap="TPosMap">
+		select p.*,u.*,u.id uid,u.REMARK uREMARK from t_pos p LEFT JOIN t_user u on p.USER_ID=u.id 
+		<if test="userId!=null">
+			where p.USER_ID=#{userId,jdbcType=VARCHAR}
+		</if>
+		order by p.MACHINE_ID
+	</select>
+</mapper>
