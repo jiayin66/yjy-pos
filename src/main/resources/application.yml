@@ -10,7 +10,7 @@ jp:
       title: demo
       description: demo
       version: 1.0.0
-      email: 2864245248@qq.com
+      email: xx@qq.com
 # 该配置的名称是固定的，不可以改变，否则将不能自动加载到数据源中
 spring:
   jackson:
