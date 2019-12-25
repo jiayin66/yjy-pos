@@ -1,0 +1,20 @@
+table{
+  border: solid 2px;
+  border-collapse:collapse;
+  margin: auto;
+}
+td{
+  border: solid 2px;
+}
+th{
+  border: solid 2px;
+}
+[alartWindow]{
+  width: 25%;
+  border:solid 2px;
+  background-color: #D2E0E6;
+  position: fixed;
+  left:38%;
+  top:30%;
+}
+

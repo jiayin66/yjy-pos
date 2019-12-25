@@ -94,10 +94,10 @@
 				and co.SCORE=#{score,jdbcType=VARCHAR}
 			</if>
 			<if test="startTime!=null">
-				and co.CREATE_TIME &gt;> #{startTime,jdbcType=DATE}
+				and co.CREATE_TIME &gt;= #{startTime,jdbcType=DATE}
 			</if>
 			<if test="endTime!=null">
-				and co.CREATE_TIME &gt;> #{endTime,jdbcType=DATE}
+				and co.CREATE_TIME &lt;= #{endTime,jdbcType=DATE}
 			</if>
 		</where>
 		order by co.CREATE_TIME desc,co.id
