@@ -74,7 +74,7 @@
     <result column="SCORE" jdbcType="INTEGER" property="score" />
     <association property="creditcard" javaType="com.yjy.entity.Creditcard">
     	 <id column="crid" jdbcType="VARCHAR" property="id"/>
-	    <result column="BILL_DATE" jdbcType="INTEGER" property="billDate" />
+	    <result column="END_DATE" jdbcType="INTEGER" property="endDate" />
 	    <result column="SPACE_DATE" jdbcType="INTEGER" property="spaceDate" />
 	    <result column="CARD_ID" jdbcType="VARCHAR" property="cardId" />
 	    <result column="CARD_NAME" jdbcType="VARCHAR" property="cardName" />

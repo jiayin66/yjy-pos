@@ -3,7 +3,7 @@
 <mapper namespace="com.yjy.mapper.CreditcardMapper">
   <resultMap id="BaseResultMap" type="com.yjy.entity.Creditcard">
     <id column="ID" jdbcType="VARCHAR" property="id"/>
-    <result column="BILL_DATE" jdbcType="INTEGER" property="billDate" />
+    <result column="END_DATE" jdbcType="INTEGER" property="endDate" />
     <result column="SPACE_DATE" jdbcType="INTEGER" property="spaceDate" />
     <result column="CARD_ID" jdbcType="VARCHAR" property="cardId" />
     <result column="CARD_NAME" jdbcType="VARCHAR" property="cardName" />
@@ -12,7 +12,7 @@
  
  <resultMap  id="creditAndLimit" type="com.yjy.entity.Creditcard">
  	 <id column="ID" jdbcType="VARCHAR" property="id"/>
-    <result column="BILL_DATE" jdbcType="INTEGER" property="billDate" />
+    <result column="END_DATE" jdbcType="INTEGER" property="endDate" />
     <result column="FIX_DATE" jdbcType="INTEGER" property="fixDate" />
     <result column="REMARK" jdbcType="VARCHAR" property="remark" />
     <result column="SPACE_DATE" jdbcType="INTEGER" property="spaceDate" />
@@ -30,7 +30,7 @@
  
  <select id="findAll" resultMap="creditAndLimit">
  	SELECT c.*,l.*,l.id lid FROM  t_creditcard c
- 	 LEFT JOIN t_credit_limit  l on c.CREDIT_LIMIT_ID=l.id 
+ 	 LEFT JOIN t_credit_limit  l on c.CREDIT_LIMIT_ID=l.id  where c.ISDELETE=0
  </select>
  
  <select id="findLimitId" resultType="string">
@@ -57,7 +57,7 @@
  
  
   <sql id="Base_Column_List">
-    ID, BILL_DATE, SPACE_DATE, CARD_ID, CARD_NAME, CREDIT_LIMIT_ID
+    ID, END_DATE, SPACE_DATE, CARD_ID, CARD_NAME, CREDIT_LIMIT_ID
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -70,10 +70,10 @@
     where ID = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.yjy.entity.Creditcard">
-    insert into t_creditcard (ID, BILL_DATE, SPACE_DATE, 
+    insert into t_creditcard (ID, END_DATE, SPACE_DATE, 
       CARD_ID, CARD_NAME, CREDIT_LIMIT_ID
       )
-    values (#{id,jdbcType=VARCHAR}, #{billDate,jdbcType=INTEGER}, #{spaceDate,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{endDate,jdbcType=INTEGER}, #{spaceDate,jdbcType=INTEGER}, 
       #{cardId,jdbcType=VARCHAR}, #{cardName,jdbcType=VARCHAR}, #{creditLimitId,jdbcType=VARCHAR}
       )
   </insert>
@@ -83,8 +83,8 @@
       <if test="id != null">
         ID,
       </if>
-      <if test="billDate != null">
-        BILL_DATE,
+      <if test="endDate != null">
+        END_DATE,
       </if>
       <if test="spaceDate != null">
         SPACE_DATE,
@@ -103,8 +103,8 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="billDate != null">
-        #{billDate,jdbcType=INTEGER},
+      <if test="endDate != null">
+        #{endDate,jdbcType=INTEGER},
       </if>
       <if test="spaceDate != null">
         #{spaceDate,jdbcType=INTEGER},
@@ -123,8 +123,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yjy.entity.Creditcard">
     update t_creditcard
     <set>
-      <if test="billDate != null">
-        BILL_DATE = #{billDate,jdbcType=INTEGER},
+      <if test="endDate != null">
+        END_DATE = #{endDate,jdbcType=INTEGER},
       </if>
       <if test="spaceDate != null">
         SPACE_DATE = #{spaceDate,jdbcType=INTEGER},
@@ -143,7 +143,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yjy.entity.Creditcard">
     update t_creditcard
-    set BILL_DATE = #{billDate,jdbcType=INTEGER},
+    set END_DATE = #{endDate,jdbcType=INTEGER},
       SPACE_DATE = #{spaceDate,jdbcType=INTEGER},
       CARD_ID = #{cardId,jdbcType=VARCHAR},
       CARD_NAME = #{cardName,jdbcType=VARCHAR},

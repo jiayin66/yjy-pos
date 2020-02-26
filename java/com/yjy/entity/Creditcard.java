@@ -10,7 +10,7 @@ import lombok.Data;
 public class Creditcard  {
     private String id;
 
-    private Integer billDate;
+    private Integer endDate;
     private Integer fixDate;
     
     @ApiModelProperty("统计开始日")
@@ -25,6 +25,7 @@ public class Creditcard  {
 
     private String creditLimitId;
     
+    @ApiModelProperty("信用卡额度")
     private CreditLimit creditLimit;
     
     @ApiModelProperty("距离最后还款日天数")
