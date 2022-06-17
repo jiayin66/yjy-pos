@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.47</version>
+			<version>1.2.83</version>
 		</dependency>
 		<!--mybatis-plus自动的维护了mybatis以及mybatis-spring的依赖， 在springboot中这三者不能同时的出现，避免版本的冲突，表示：跳进过这个坑 -->
 		<dependency>
